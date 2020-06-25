@@ -1,30 +1,30 @@
 $(function() {
-    var FADE_TIME = 150;
-    var TYPING_TIMER_LENGTH = 400;
-    var COLORS = [
+    let FADE_TIME = 150;
+    let TYPING_TIMER_LENGTH = 400;
+    let COLORS = [
       '#e21400', '#91580f', '#f8a700', '#f78b00',
       '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
       '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
     ];
   
-    var $window = $(window);
-    var $usernameInput = $('.usernameInput');
-    var $messages = $('.messages');
-    var $inputMessage = $('.inputMessage');
+    let $window = $(window);
+    let $usernameInput = $('.usernameInput');
+    let $messages = $('.messages');
+    let $inputMessage = $('.inputMessage');
   
-    var $loginPage = $('.login.page');
-    var $chatPage = $('.chat.page');
+    let $loginPage = $('.login.page');
+    let $chatPage = $('.chat.page');
   
-    var username;
-    var connected = false;
-    var typing = false;
-    var lastTypingTime;
-    var $currentInput = $usernameInput.focus();
+    let username;
+    let connected = false;
+    let typing = false;
+    let lastTypingTime;
+    let $currentInput = $usernameInput.focus();
   
-    var socket = io();
+    let socket = io();
   
     function addParticipantsMessage (data) {
-      var message = '';
+      let message = '';
       if (data.numUsers === 1) {
         message += "there's 1 participant";
       } else {
@@ -47,7 +47,7 @@ $(function() {
     }
   
     function sendMessage () {
-      var message = $inputMessage.val();
+      let message = $inputMessage.val();
       message = cleanInput(message);
       if (message && connected) {
         $inputMessage.val('');
@@ -60,26 +60,26 @@ $(function() {
     }
   
     function log (message, options) {
-      var $el = $('<li>').addClass('log').text(message);
+      let $el = $('<li>').addClass('log').text(message);
       addMessageElement($el, options);
     }
   
     function addChatMessage (data, options) {
-      var $typingMessages = getTypingMessages(data);
+      let $typingMessages = getTypingMessages(data);
       options = options || {};
       if ($typingMessages.length !== 0) {
         options.fade = false;
         $typingMessages.remove();
       }
   
-      var $usernameDiv = $('<span class="username"/>')
+      let $usernameDiv = $('<span class="username"/>')
         .text(data.username)
         .css('color', getUsernameColor(data.username));
-      var $messageBodyDiv = $('<span class="messageBody">')
+      let $messageBodyDiv = $('<span class="messageBody">')
         .text(data.message);
   
-      var typingClass = data.typing ? 'typing' : '';
-      var $messageDiv = $('<li class="message"/>')
+      let typingClass = data.typing ? 'typing' : '';
+      let $messageDiv = $('<li class="message"/>')
         .data('username', data.username)
         .addClass(typingClass)
         .append($usernameDiv, $messageBodyDiv);
@@ -100,7 +100,7 @@ $(function() {
     }
   
     function addMessageElement (el, options) {
-      var $el = $(el);
+      let $el = $(el);
   
       if (!options) {
         options = {};
@@ -136,8 +136,8 @@ $(function() {
         lastTypingTime = (new Date()).getTime();
   
         setTimeout(function () {
-          var typingTimer = (new Date()).getTime();
-          var timeDiff = typingTimer - lastTypingTime;
+          let typingTimer = (new Date()).getTime();
+          let timeDiff = typingTimer - lastTypingTime;
           if (timeDiff >= TYPING_TIMER_LENGTH && typing) {
             socket.emit('stop typing');
             typing = false;
@@ -153,11 +153,11 @@ $(function() {
     }
   
     function getUsernameColor (username) {
-      var hash = 7;
-      for (var i = 0; i < username.length; i++) {
+      let hash = 7;
+      for (let i = 0; i < username.length; i++) {
          hash = username.charCodeAt(i) + (hash << 5) - hash;
       }
-      var index = Math.abs(hash % COLORS.length);
+      let index = Math.abs(hash % COLORS.length);
       return COLORS[index];
     }
     
@@ -190,7 +190,7 @@ $(function() {
     
     socket.on('login', function (data) {
       connected = true;
-      var message = "Welcome to Socket.IO Chat – ";
+      let message = "Welcome to Socket.IO Chat – ";
       log(message, {
         prepend: true
       });
