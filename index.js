@@ -39,6 +39,10 @@ io.on('connection', socket => {
     });
   });
 
+  socket.on('stream', (image) => {
+    socket.broadcast.emit('stream', image);
+  })
+
   socket.on('typing', () => {
     socket.broadcast.emit('typing', {
       username: socket.username
@@ -58,6 +62,6 @@ io.on('connection', socket => {
         username: socket.username,
         numUsers: numUsers
       });
-    }
+   }
   });
 });
