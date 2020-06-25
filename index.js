@@ -54,7 +54,6 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     if (addedUser) {
       --numUsers;
-
       socket.broadcast.emit('user left', {
         username: socket.username,
         numUsers: numUsers
