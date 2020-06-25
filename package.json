@@ -1,13 +1,17 @@
 {
-	"name": "socketio-chat",
+	"name": "quick-chat",
 	"version": "1.0.0",
 	"description": "A super quick chat built on socket.io and express.js",
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",
 		"watch": "nodemon index.js",
+<<<<<<< HEAD
 		"lint": "eslint --ext .js",
 		"lint:fix": "eslint --ext .js --fix"
+=======
+		"lint": "eslint --ext .js"
+>>>>>>> 8ce3012391cb7f8bd10c87a3fd01b6611ad292e9
 	},
 	"dependencies": {
 		"express": "^4.12.4",

@@ -1,19 +1,19 @@
-const express = require('express');
-const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-const port = process.env.PORT || 3000;
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 3000;
 
 server.listen(port, () => {
-  console.log(`Server listening at port ${port}`);
+  console.log('Server listening at port %d', port);
 });
 
 app.use(express.static('public'));
 
-let numUsers = 0;
+var numUsers = 0;
 
 io.on('connection', socket => {
-  let addedUser = false;
+  var addedUser = false;
 
   socket.on('new message', data => {
     socket.broadcast.emit('new message', {
@@ -28,11 +28,9 @@ io.on('connection', socket => {
     socket.username = username;
     ++numUsers;
     addedUser = true;
-
     socket.emit('login', {
       numUsers: numUsers
     });
-
     socket.broadcast.emit('user joined', {
       username: socket.username,
       numUsers: numUsers
