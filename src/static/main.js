@@ -49,6 +49,23 @@ if (storedUsername) {
   socket.emit("add user", username);
 }
 
+if (query && query.includes("?room=")) {
+  const id = query.split("=")[1];
+  fetch("/checkroom/" + id)
+    .then((x) => x.status)
+    .then((status) => {
+      if (status == 200) {
+        console.log("Room found");
+      } else if (status == 404) {
+        console.log("Room not found");
+      } else {
+        console.log("API problem");
+      }
+    });
+} else {
+  console.log("home");
+}
+
 const addParticipantsMessage = (data) => {
   let message = "";
   if (data.numUsers === 1) {
