@@ -8,8 +8,8 @@
 
 require("dotenv").config();
 
-const sqlite3 = require('sqlite3').verbose();
-const { v4: uuidv4 } = require('uuid');
+const sqlite3 = require("sqlite3").verbose();
+const { v4: uuidv4 } = require("uuid");
 
 const express = require("express");
 const app = express();
@@ -22,28 +22,34 @@ server.listen(port, () => {
 
 const io = require("socket.io")(server);
 
-const db = new sqlite3.Database('./storage.db');
+const db = new sqlite3.Database("./storage.db");
 
-db.each(`CREATE TABLE IF NOT EXISTS rooms (
+db.each(
+  `CREATE TABLE IF NOT EXISTS rooms (
   room_id TEXT NOT NULL
-);`, err => {
-  if (err) console.error(err.message);
-});
+);`,
+  (err) => {
+    if (err) console.error(err.message);
+  }
+);
 
-db.each(`CREATE TABLE IF NOT EXISTS messages (
+db.each(
+  `CREATE TABLE IF NOT EXISTS messages (
   room_id TEXT NOT NULL,
   message_id TEXT NOT NULL,
   user TEXT NOT NULL,
   content TEXT NOT NULL
-);`, err => {
-  if (err) console.error(err.message);
-});
+);`,
+  (err) => {
+    if (err) console.error(err.message);
+  }
+);
 
 app.use("/", express.static("dist"));
 
 app.get("/createroom", (req, res) => {
   const id = uuidv4();
-  db.get(`INSERT INTO rooms (room_id) VALUES (?)`, [id], err => {
+  db.get(`INSERT INTO rooms (room_id) VALUES (?)`, [id], (err) => {
     if (err) {
       console.error(err.message);
       res.status(503).send("Server error");
