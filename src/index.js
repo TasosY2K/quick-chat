@@ -1,19 +1,28 @@
-var express = require('express');
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-var port = process.env.PORT || 3000;
+//add sqlite and keep last 50 messages
+//add settings
+//add room system
+//add deadman switch
+//modernize ui
+//add avatar
+//add meta data
+
+require("dotenv").config();
+let express = require('express');
+let app = express();
+let server = require('http').createServer(app);
+let io = require('socket.io')(server);
+let port = process.env.PORT || 3000;
 
 server.listen(port, () => {
   console.log('Server listening at port %d', port);
 });
 
-app.use(express.static('public'));
+app.use('/', express.static('dist'));
 
-var numUsers = 0;
+let numUsers = 0;
 
 io.on('connection', socket => {
-  var addedUser = false;
+  let addedUser = false;
 
   socket.on('new message', data => {
     socket.broadcast.emit('new message', {
@@ -36,10 +45,6 @@ io.on('connection', socket => {
       numUsers: numUsers
     });
   });
-
-  socket.on('stream', (image) => {
-    socket.broadcast.emit('stream', image);
-  })
 
   socket.on('typing', () => {
     socket.broadcast.emit('typing', {

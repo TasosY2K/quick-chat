@@ -4,22 +4,27 @@
 	"description": "A super quick chat built on socket.io and express.js",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js",
-		"watch": "nodemon index.js",
-<<<<<<< HEAD
-		"lint": "eslint --ext .js",
-		"lint:fix": "eslint --ext .js --fix"
-=======
-		"lint": "eslint --ext .js"
->>>>>>> 8ce3012391cb7f8bd10c87a3fd01b6611ad292e9
+		"start": "node ./src/index.js",
+		"watch": "nodemon ./src/index.js --watch",
+		"lint": "eslint --fix --ext .js",
+		"build": "webpack"
 	},
 	"dependencies": {
+		"dotenv": "^8.2.0",
 		"express": "^4.12.4",
-		"socket.io": "*"
+		"socket.io": "*",
+		"sqlite3": "^5.0.0"
 	},
 	"license": "GPL-3.0",
 	"devDependencies": {
+		"css-loader": "^5.0.1",
 		"eslint": "^7.3.1",
-		"nodemon": "^2.0.4"
+		"jquery": "^3.5.1",
+		"nodemon": "^2.0.4",
+		"push.js": "^1.0.12",
+		"socket.io-client": "^3.0.4",
+		"style-loader": "^2.0.0",
+		"webpack": "^5.11.0",
+		"webpack-cli": "^4.2.0"
 	}
 }
